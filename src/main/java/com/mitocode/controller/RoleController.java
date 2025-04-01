@@ -4,6 +4,7 @@ package com.mitocode.controller;
 import com.mitocode.dto.RoleDTO;
 import com.mitocode.model.Role;
 import com.mitocode.service.IRoleService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -37,13 +38,13 @@ public class RoleController {
     }
 
     @PostMapping
-    public ResponseEntity<RoleDTO> save(@RequestBody RoleDTO dto) throws Exception{
+    public ResponseEntity<RoleDTO> save(@Valid @RequestBody RoleDTO dto) throws Exception{
         Role obj = roleService.save(convertToEntity(dto));
         return new ResponseEntity<>(convertToDTO(obj), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<RoleDTO> update( @PathVariable("id") Integer id,@RequestBody RoleDTO dto) throws Exception{
+    public ResponseEntity<RoleDTO> update(@Valid @PathVariable("id") Integer id,@RequestBody RoleDTO dto) throws Exception{
         Role obj = roleService.update(id, convertToEntity(dto));
         return ResponseEntity.ok(convertToDTO(obj));
     }

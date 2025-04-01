@@ -4,6 +4,7 @@ package com.mitocode.controller;
 import com.mitocode.dto.StudentDTO;
 import com.mitocode.model.Student;
 import com.mitocode.service.IStudentService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -37,13 +38,13 @@ public class StudentController {
     }
 
     @PostMapping
-    public ResponseEntity<StudentDTO> save(@RequestBody StudentDTO dto) throws Exception{
+    public ResponseEntity<StudentDTO> save(@Valid @RequestBody StudentDTO dto) throws Exception{
         Student obj = studentService.save(convertToEntity(dto));
         return new ResponseEntity<>(convertToDTO(obj), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<StudentDTO> update( @PathVariable("id") Integer id,@RequestBody StudentDTO dto) throws Exception{
+    public ResponseEntity<StudentDTO> update(@Valid @PathVariable("id") Integer id,@RequestBody StudentDTO dto) throws Exception{
         Student obj = studentService.update(id, convertToEntity(dto));
         return ResponseEntity.ok(convertToDTO(obj));
     }

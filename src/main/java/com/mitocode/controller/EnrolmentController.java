@@ -4,6 +4,7 @@ package com.mitocode.controller;
 import com.mitocode.dto.EnrolmentDTO;
 import com.mitocode.model.Enrolment;
 import com.mitocode.service.IEnrolmentService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -38,13 +39,13 @@ public class EnrolmentController {
     }
 
     @PostMapping
-    public ResponseEntity<EnrolmentDTO> save(@RequestBody EnrolmentDTO dto) throws Exception{
+    public ResponseEntity<EnrolmentDTO> save(@Valid @RequestBody EnrolmentDTO dto) throws Exception{
         Enrolment obj = enrolmentService.save(convertToEntity(dto));
         return new ResponseEntity<>(convertToDTO(obj), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<EnrolmentDTO> update( @PathVariable("id") Integer id,@RequestBody EnrolmentDTO dto) throws Exception{
+    public ResponseEntity<EnrolmentDTO> update(@Valid @PathVariable("id") Integer id,@RequestBody EnrolmentDTO dto) throws Exception{
         Enrolment obj = enrolmentService.update(id, convertToEntity(dto));
         return ResponseEntity.ok(convertToDTO(obj));
     }

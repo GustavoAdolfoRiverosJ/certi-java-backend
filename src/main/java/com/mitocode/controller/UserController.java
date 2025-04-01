@@ -4,6 +4,7 @@ package com.mitocode.controller;
 import com.mitocode.dto.UserDTO;
 import com.mitocode.model.User;
 import com.mitocode.service.IUserService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -37,13 +38,13 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<UserDTO> save(@RequestBody UserDTO dto) throws Exception{
+    public ResponseEntity<UserDTO> save(@Valid @RequestBody UserDTO dto) throws Exception{
         User obj = userService.save(convertToEntity(dto));
         return new ResponseEntity<>(convertToDTO(obj), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<UserDTO> update( @PathVariable("id") Integer id,@RequestBody UserDTO dto) throws Exception{
+    public ResponseEntity<UserDTO> update(@Valid @PathVariable("id") Integer id,@RequestBody UserDTO dto) throws Exception{
         User obj = userService.update(id, convertToEntity(dto));
         return ResponseEntity.ok(convertToDTO(obj));
     }
